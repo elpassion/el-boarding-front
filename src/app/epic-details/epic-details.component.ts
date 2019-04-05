@@ -1,8 +1,7 @@
 import { Epic } from '../epic';
 import { Task } from '../task';
-import { TASKS } from '../mock-tasks';
-import { TaskComponent } from '../task/task.component';
 import { Component, OnInit, Input } from '@angular/core';
+import {TasksService} from '../tasks.service';
 
 @Component({
   selector: 'app-epic-details',
@@ -12,13 +11,18 @@ import { Component, OnInit, Input } from '@angular/core';
 export class EpicDetailsComponent implements OnInit {
   @Input() epic: Epic;
 
-  tasks = TASKS;
-
+  tasks: Task[];
   selectedTask: Task;
 
-  constructor() { }
+  constructor(private taskService: TasksService) { }
 
   ngOnInit() {
+    this.getTasks();
+  }
+
+  getTasks(): void {
+    this.taskService.getTasks()
+      .subscribe(tasks => this.tasks = tasks);
   }
 
   onSelect(task: Task): void {

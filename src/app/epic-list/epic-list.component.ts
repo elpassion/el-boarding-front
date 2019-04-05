@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Epic } from '../epic';
-import { EpicComponent } from '../epic/epic.component';
-import { EPICS } from '../mock-epics';
+import { EpicService } from '../epic.service';
 
 
 @Component({
@@ -12,12 +11,19 @@ import { EPICS } from '../mock-epics';
 })
 export class EpicListComponent implements OnInit {
 
-  epics = EPICS;
+  epics: Epic[];
   selectedEpic: Epic;
 
-  constructor() { }
+  constructor(private epicService: EpicService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getEpics();
+  }
+
+  getEpics(): void {
+    this.epicService.getEpics()
+      .subscribe(epics => this.epics = epics);
+  }
 
   onSelect(epic: Epic): void {
     this.selectedEpic = epic;
