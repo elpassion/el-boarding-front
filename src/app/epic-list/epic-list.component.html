@@ -1,0 +1,9 @@
+<div>
+  <ul>
+    <li *ngFor="let epic of epics"
+        (click)="onSelect(epic)">
+      <app-epic [epic]="epic"></app-epic>
+    </li>
+  </ul>
+  <app-epic-details [epic]="selectedEpic"></app-epic-details>
+</div>
